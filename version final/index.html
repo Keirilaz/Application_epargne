@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- CSS only -->
+</head>
+
+<body class="container">
+    <div class="blockpage">
+    <!-- bannere -->
+    <header>
+        <div class="banniere">
+            <div class="titre">
+                <h1>GESTION DE BUDGET</h1>
+            </div>
+            <div class="navBouton">
+                <div class="depense">Dépenses</div>
+                <div class="epargne" id="button_modal" data-toggle="modal" data-target="#exampleModal">Epargne</div>
+                <div class="revenu">Revenu</div>
+            </div>
+        </div>
+    </header>
+    <!--modal-->
+    <section class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div id="modal" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Quelle est votre projet ?</h5>
+
+                    <div class="content">
+                        <button class="myBtn" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                         <span class="leftCross"></span>
+                         <span class="rightCross"></span>
+                        </button>
+                       </div>
+                </div>
+                <!----------Contenu du modal  --------->
+                <div id="modal-body" class="modal-body">
+                    <div class="form">
+                        <input type="text" id="projectName" class="form__input" autocomplete="off" placeholder=" ">
+                        <label for="projectName" class="form__label">Nom du projet</label>
+                      </div>
+                      
+                      <div class="form">
+                        <input type="text" id="projectPrice" class="form__input" autocomplete="off" placeholder=" ">
+                        <label for="projectPrice" class="form__label">Prix </label>
+                      </div>
+                      
+                      <div class="form">
+                        <input type="text" id="investments" class="form__input" autocomplete="off" placeholder=" ">
+                        <label for="investments" class="form__label">Epargne</label>
+                      </div>
+
+                        <button id="buttonCalcul" type="button" class="bouton">Calcul</button>
+                        <p id="message"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--fin modal-->
+    <!-- Barre ajout de catégories -->
+    <div class="selecteur">
+        
+            <label for="reference"></label>
+            <input type="text" id="reference" placeholder="Référence">
+        
+            <label for="montant"></label>
+            <input type="number" id="montant" placeholder="Montant">
+        
+            <label for="sous"></label>
+            <select name="sous" id="sous">
+        
+        
+        
+        
+            <optgroup label="Depense" id="select-dep">
+                <option value="categorie1">Logement</option>
+                <option value="categorie2">Alimentaire</option>
+                <option value="categorie3">transport</option>
+                <option value="categorie4">Loisir</option>
+                <option value="categorie5">Santé</option>
+                <option value="categorie6">Divers</option>
+            </optgroup>
+            <optgroup label="Revenu" id="select-rev">
+                <option value="cata1">Salaire</option>
+                <option value="cata2">Allocations</option>
+                <option value="cata3">Autres</option>
+
+            </optgroup>
+        </select>
+        <input type="button" value="ajouter" id="ajout" disabled class="btn btn-primary">
+    </div>
+    <!-- barre de navigation dépenses-->
+    <!--dépense-->
+    <section class="bloc-depense">
+        <div class="zut">
+            <div class="totalRevDep-rouge">
+                <h2>Dépenses</h2>
+                <p>total de dépenses : <span id="total-depense"></span></p>
+            </div>
+
+            <div class="accordion accordion-flush  sidebar" id="accordionFlushExample">
+                <div class="accordion-item ">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed"id="rouge"  type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Logement total: <span id="total-categorie1" class="depenses"
+                                data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <!--categorie -->
+                            <table class="youpi">
+                                <tbody id="categorie1">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" id="rouge" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            Alimentaire total: <span id="total-categorie2" class="depenses"
+                                data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <table class="youpi">
+                                <tbody id="categorie2">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" id="rouge" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree" aria-expanded="false"
+                            aria-controls="flush-collapseThree">
+                            Transport total: <span id="total-categorie3" class="depenses"
+                                data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <table class="youpi">
+
+                                <tbody id="categorie3">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFour">
+                        <button class="accordion-button collapsed" id="rouge" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFour" aria-expanded="false"
+                            aria-controls="flush-collapseFour">
+                            Loisir total: <span id="total-categorie4" class="depenses" data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <table class="youpi">
+
+                                <tbody id="categorie4">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFive">
+                        <button class="accordion-button collapsed" id="rouge" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFive" aria-expanded="false"
+                            aria-controls="flush-collapseFive">
+                            Santé total: <span id="total-categorie5" class="depenses" data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <table class="youpi">
+
+                                <tbody id="categorie5">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingSix">
+                        <button class="accordion-button collapsed" id="rouge" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                            Divers <span id="total-categorie6" class="depenses" data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <table class="youpi">
+
+                                <tbody id="categorie6">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="chart">
+            <canvas id="depChart" width="400" height="400"></canvas>
+        </section>
+    </section>
+
+    <!-- barre de navigation Revenus-->
+    <!--Revenus-->
+
+    <section class="bloc-revenu">
+        <div>
+            <div class="totalRevDep-bleu" >
+                <h2>Revenu</h2>
+                <p>total de revenus : <span id="total-revenue"></span></p>
+            </div>
+
+            <div class="accordion accordion-flush  sidebar" id="accordionFlushExample2">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingSeven">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseSeven" aria-expanded="false"
+                            aria-controls="flush-collapseSeven">
+                            Salaire total: <span id="total-cata1" class="revenus" data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+
+                    <div id="flush-collapseSeven" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample2">
+                        <div class="accordion-body">
+                            <!--categorie -->
+                            <table class="oups">
+                                <tbody id="cata1">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item ">
+                    <h2 class="accordion-header" id="flush-headingEight">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseEight" aria-expanded="false"
+                            aria-controls="flush-collapseEight">
+                            Allocations total: <span id="total-cata2" class="revenus" data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+
+                    <div id="flush-collapseEight" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingEight" data-bs-parent="#accordionFlushExample2">
+                        <div class="accordion-body">
+                            <!--categorie -->
+                            <table class="oups">
+                                <tbody id="cata2">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item ">
+                    <h2 class="accordion-header" id="flush-headingNine">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseNine" aria-expanded="false"
+                            aria-controls="flush-collapseNine">
+                            Autres total: <span id="total-cata3" class="revenus" data-total-categorie="0"></span>
+                        </button>
+                    </h2>
+
+                    <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine"
+                        data-bs-parent="#accordionFlushExample2">
+                        <div class="accordion-body">
+                            <!--categorie -->
+                            <table class="oups">
+                                <tbody id="cata3">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="chart">
+            <canvas id="revChart" width="400" height="400"></canvas>
+        </section>
+
+    </section>
+    <!--revenu-->
+    <section class="bloc-global">
+        <div class="chart">
+            <canvas id="globChart" width="400" height="400"></canvas>
+        </div>
+        <p>benefice totale : <span id="resultat"></span></p>
+    </section>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./script/graphique.js"></script>
+    <script src="./script/epargne.js"></script>
+    <script src="./script/index.js"></script>
+</body>
+
+</html>
